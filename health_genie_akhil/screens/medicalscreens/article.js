@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -9,111 +9,82 @@ import {
   Image,
 } from 'react-native';
 
-const items = [
-  {
-    img: 'https://plus.unsplash.com/premium_photo-1661281316103-9aef5ad47c50?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
-    title: 'New Study Finds Link Between Exercise and Brain Function',
-    author: 'Samantha Lee',
-    authorImg:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    tag: 'health',
-    date: 'Mar 24, 2023',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1519558260268-cde7e03a0152?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
-    title: 'Tech Giant Announces New Line of Smart Home Devices',
-    author: 'John Smith',
-    authorImg:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    tag: 'technology',
-    date: 'Mar 23, 2023',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1605367177286-f3d4789c47a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2342&q=80',
-    title: 'City Council Approves Plan to Expand Public Transportation',
-    author: 'Emily Chen',
-    authorImg:
-      'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1389&q=80',
-    tag: 'politics',
-    date: 'Mar 22, 2023',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1565615833231-e8c91a38a012?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
-    title: "Researchers Discover Potential Treatment for Alzheimer's",
-    author: 'Samantha Lee',
-    authorImg:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    tag: 'health',
-    date: 'Mar 21, 2023',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2344&q=80',
-    title: 'New Startup Aims to Revolutionize Electric Car Market',
-    author: 'John Smith',
-    authorImg:
-      'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    tag: 'technology',
-    date: 'Mar 20, 2023',
-  },
-  {
-    img: 'https://plus.unsplash.com/premium_photo-1663050986883-a5bdd99a7fa5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2362&q=80',
-    title: 'Local Election Results Are In: Democrats Retain Majority',
-    author: 'Emily Chen',
-    authorImg:
-      'https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1389&q=80',
-    tag: 'politics',
-    date: 'Mar 19, 2023',
-  },
-];
-
 export default function Article() {
+  const [newsUrl, setNewsUrl] = useState('');
+  const [newsTitle, setNewsTitle] = useState('');
+  const [newsAuthor, setNewsAuthor] = useState('');
+
+  const handleApiCall = () => {
+
+      const userId = 1111222211;
+      // Replace 'YOUR_API_ENDPOINT_URL' with your actual API URL
+      const apiUrl = 'https://72bb-103-68-38-66.ngrok.io/news';
+
+      // Prepare the data to be sent in the POST request
+      const data = {
+        user_id: userId,
+      };
+
+      // Perform the API call using the fetch() function
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Handle the API response as needed
+        setNewsUrl(responseData.obj1.url);
+        setNewsTitle(responseData.obj1.title);
+        setNewsAuthor(responseData.obj1.author);
+      }).catch ((error) => {
+      // Handle any errors that occurred during the API call
+      console.error('Error:', error);
+    });
+  };
+
+ handleApiCall();
+
   return (
     <SafeAreaView style={{ backgroundColor: '#fff' }}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>News Feed</Text>
+          <TouchableOpacity
+            onPress={() => {}}>
+            <View style={styles.card}>
+              <Image
+                alt=""
+                resizeMode="cover"
+                source={{ uri: newsUrl }}
+                style={styles.cardImg}
+              />
+              <View style={styles.cardBody}>
+                <Text style={styles.cardTag}>Health</Text>
 
-        {items.map(({ img, title, author, authorImg, tag, date }, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                // handle onPress
-              }}>
-              <View style={styles.card}>
-                <Image
-                  alt=""
-                  resizeMode="cover"
-                  source={{ uri: img }}
-                  style={styles.cardImg}
-                />
+                <Text style={styles.cardTitle}>{newsTitle}</Text>
 
-                <View style={styles.cardBody}>
-                  <Text style={styles.cardTag}>{tag}</Text>
+                <View style={styles.cardRow}>
+                  <View style={styles.cardRowItem}>
+                    <Image
+                      alt=""
+                      source={{ uri: newsUrl }}
+                      style={styles.cardRowItemImg}
+                    />
 
-                  <Text style={styles.cardTitle}>{title}</Text>
+                    <Text style={styles.cardRowItemText}>{newsAuthor}</Text>
+                  </View>
 
-                  <View style={styles.cardRow}>
-                    <View style={styles.cardRowItem}>
-                      <Image
-                        alt=""
-                        source={{ uri: authorImg }}
-                        style={styles.cardRowItemImg}
-                      />
+                  <Text style={styles.cardRowDivider}>·</Text>
 
-                      <Text style={styles.cardRowItemText}>{author}</Text>
-                    </View>
-
-                    <Text style={styles.cardRowDivider}>·</Text>
-
-                    <View style={styles.cardRowItem}>
-                      <Text style={styles.cardRowItemText}>{date}</Text>
-                    </View>
+                  <View style={styles.cardRowItem}>
+                    <Text style={styles.cardRowItemText}>July 22nd, 2023</Text>
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
-          );
-        })}
+            </View>
+          </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
