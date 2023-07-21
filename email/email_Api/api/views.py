@@ -64,7 +64,7 @@ def diet(request):
     if request.method=='POST':
         rl_db.get('')
         data=json.loads(request.body)
-        cnds,symds=rl_db.get(data['user_id'])['Conditions'],rl_db.get(data['user_id'])['Symptoms']
+        cnds,symds=rl_db.get(data['user_id']).val()['Conditions'],rl_db.get(data['user_id'])['Symptoms']
         if 'text' in data:
             ingds = data['text']
         else:
