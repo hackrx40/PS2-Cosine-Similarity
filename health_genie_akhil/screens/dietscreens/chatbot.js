@@ -11,6 +11,39 @@ import {
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export default function Chatbot({ }) {
+    const [searchText, setSearchText] = useState('');
+    const [apiResponse, setApiResponse] = useState('');
+
+    const handleApiCall = () => {
+        const userId = 1111222211;
+    
+        // Assuming you have the API endpoint URL, replace 'YOUR_API_ENDPOINT_URL' with your actual API URL
+        const apiUrl = 'YOUR_API_ENDPOINT_URL';
+    
+        // Prepare the data to be sent in the POST request
+        const data = {
+          user_id: userId,
+          text: searchText,
+        };
+    
+        // Perform the API call using the fetch() function
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((responseData) => {
+            // Handle the API response as needed
+            setApiResponse(responseData);
+          })
+          .catch((error) => {
+            // Handle any errors that occurred during the API call
+            console.error('Error:', error);
+          });
+      };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -55,6 +88,8 @@ export default function Chatbot({ }) {
                   placeholder="Enter ingedients"
                   placeholderTextColor="#9eadba"
                   style={styles.input}
+                  value={searchText}
+                  onChangeText={(text) => setSearchText(text)} // Update the searchText state
                 />
 
                 <View style={styles.inputIcon}>
@@ -64,9 +99,7 @@ export default function Chatbot({ }) {
             </View>
 
             <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}>
+              onPress={handleApiCall}>
               <View style={styles.btn}>
                 <Text style={styles.btnText}>Submit</Text>
               </View>
@@ -76,7 +109,12 @@ export default function Chatbot({ }) {
 
         <View style={styles.placeholder}>
           <View style={styles.placeholderInset}>
-            {/* Replace with your content */}
+              {/* Display the API response data here */}
+            {apiResponse ? (
+              <Text style={styles.apiResponseText}>{apiResponse}</Text>
+            ) : (
+              <Text style={styles.apiResponseText}>No data to display.</Text>
+            )}
           </View>
         </View>
       </View>
