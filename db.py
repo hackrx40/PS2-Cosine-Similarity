@@ -51,6 +51,6 @@ for i in range(data.shape[0]):
     push_data[key]['Conditions']=str_1
     push_data[key]['Prev_Doc_Visits']=str_2
 
-print(push_data)
+#print(push_data)
 db.child('user_data').set(push_data)
-print(db.get(key).val())
+print(db.child('user_data').child('1111222201').get().val()['Conditions'])
