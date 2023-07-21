@@ -1,4 +1,6 @@
 import React from 'react';
+import {useState} from 'react';
+
 import {
     StyleSheet,
     SafeAreaView,
@@ -18,7 +20,7 @@ export default function Chatbot({ }) {
         const userId = 1111222211;
     
         // Assuming you have the API endpoint URL, replace 'YOUR_API_ENDPOINT_URL' with your actual API URL
-        const apiUrl = 'YOUR_API_ENDPOINT_URL';
+        const apiUrl = 'https://ad81-59-97-191-226.ngrok.io/diet';
     
         // Prepare the data to be sent in the POST request
         const data = {
@@ -37,7 +39,7 @@ export default function Chatbot({ }) {
           .then((response) => response.json())
           .then((responseData) => {
             // Handle the API response as needed
-            setApiResponse(responseData);
+            setApiResponse(responseData.output);
           })
           .catch((error) => {
             // Handle any errors that occurred during the API call
@@ -219,4 +221,11 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       color: '#fff',
     },
+    // New style for displaying API response data
+  apiResponseText: {
+    fontSize: 16,
+    color: '#222',
+    textAlign: 'center',
+    padding: 16,
+  },
   });
