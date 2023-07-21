@@ -14,7 +14,7 @@ You only have to generate the content of the mail.
 age=20
 city='delhi'
 topics='Nutritions, Ayurveda'
-PROMPT_FOR_MODEL.format({'age':age,'city':city,'topics':topics})
+PROMPT_FOR_MODEL.format(age=age,city=city,topics=topics)
 
 output = replicate.run(
     "a16z-infra/llama13b-v2-chat:5c785d117c5bcdd1928d5a9acb1ffa6272d6cf13fcb722e90886a0196633f9d3",
