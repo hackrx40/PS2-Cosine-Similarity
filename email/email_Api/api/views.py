@@ -72,7 +72,7 @@ def news(request):
         for i in range(0,len(docs)):
             articles['obj'+(i+1)]={'title':docs[i]['title'],'url':docs[i]['urlToImage'],'author':docs[i]['author']}
         print(articles)
-        return articles
+        return JsonResponse(articles)
 @csrf_exempt
 def diet(request):
     if request.method=='POST':
