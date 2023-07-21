@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 import pyrebase
 import json
 
+
 import replicate
 import os
 os.environ['REPLICATE_API_TOKEN']='r8_3qVVdwlTNa1h7WlGgPQ3ClRXEEzwW2528PQCt'
@@ -30,7 +31,6 @@ And the following Conditions :
 '''
 
 
-
 config={
   'apiKey': "AIzaSyB-XZ68XuIyP4l-ghWgV4Y-dIg4Zw_LVQM",
   'authDomain': "hackrx-pre.firebaseapp.com",
@@ -48,8 +48,8 @@ rl_db=db.database()
 
 def email(request):
     if request.method == 'GET':
-        htmly = get_template('Email.html')
-        subject, from_email, to = 'welcome', 'your_email@gmail.com', email
+        htmly = get_template('email.html')
+        subject, from_email, to = 'welcome', 'giridharsunil@gmail.com', 'akhilrnair28@gmail.com'
         d = {'content': 'abc'}
         html_content = htmly.render(d)
         msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
@@ -64,7 +64,7 @@ def diet(request):
     if request.method=='POST':
         rl_db.get('')
         data=json.loads(request.body)
-        cnds,symds=rl_db.child('user_data').child(data['user_id']).get().val()['Conditions'],rl_db.child('user_data').child(data['user_id']).get().val()['Symptoms']
+        cnds,symds,gend=rl_db.child('user_data').child(data['user_id']).get().val()['Conditions'],rl_db.child('user_data').child(data['user_id']).get().val()['Symptoms'],rl_db.child('user_data').child(data['user_id']).get().val()['Gender']
         if 'text' in data:
             ingds = data['text']
         else:
@@ -81,4 +81,5 @@ def diet(request):
         ot=''
         for i in output:
             ot+=i
-        return JsonResponse({'output':ot})
+        return JsonResponse({'output':ot, 'gender': gend})
+
