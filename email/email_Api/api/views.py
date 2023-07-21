@@ -5,10 +5,12 @@ from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
 import pyrebase
 import json
-
+import requests
+import json
 import replicate
 import os
 os.environ['REPLICATE_API_TOKEN']='r8_3qVVdwlTNa1h7WlGgPQ3ClRXEEzwW2528PQCt'
+
 PROMPT_FOR_MODEL='''
 You are to generate a mail to market a health app that is personalized to the user's need.
 Create mail to cater to a user with only the following data and do not add any other data:
@@ -18,6 +20,7 @@ Interested Topics: {topics}
 Do not make your own conclusions, create only necessary details.
 You only have to generate the content of the mail.
 '''
+
 DIET_PROMPT_FOR_MODEL='''
 Generate a list of Foods that can be prepared using the following Ingredients :
 {ingds}
@@ -58,11 +61,21 @@ def email(request):
         return {
             'success': 1
         }
-
+@csrf_exempt
+def news(request):
+    if request.method=='POST':
+        data=request.body
+        query='+'.join(rl_db.child('user_data').child(data['user_id']).get().val()['Articles'])
+        resp=requests.get("https://newsapi.org/v2/everything?q="+query+"&from=2023-06-21&sortBy=publishedAt&apiKey=206e6bd694234e429edacbaa9c437d6c")
+        docs=json.loads(resp.content.decode())['articles'][5]
+        articles=dict()
+        for i in range(0,len(docs)):
+            articles['obj'+(i+1)]={'title':docs[i]['title'],'url':docs[i]['urlToImage'],'author':docs[i]['author']}
+        print(articles)
+        return articles
 @csrf_exempt
 def diet(request):
     if request.method=='POST':
-        rl_db.get('')
         data=json.loads(request.body)
         cnds,symds=rl_db.child('user_data').child(data['user_id']).get().val()['Conditions'],rl_db.child('user_data').child(data['user_id']).get().val()['Symptoms']
         if 'text' in data:
