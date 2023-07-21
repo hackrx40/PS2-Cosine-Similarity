@@ -1,10 +1,7 @@
 import replicate
 import os
-os.environ['REPLICATE_API_TOKEN']="r8_LbdSMrlsq7oPGGb6i72nnIEhfkAyYfo1fFusD"
-age=20
-city='delhi'
-topics='Nutritions, Ayurveda'
-PROMPT_FOR_MODEL=f'''
+os.environ['REPLICATE_API_TOKEN']='r8_6N0lkVMsdoSTVULfOVZvKbRTNuyiLKv3aW4mJ'
+PROMPT_FOR_MODEL='''
 You are to generate a mail to market a health app that is personalized to the user's need.
 Create mail to cater to a user with only the following data and do not add any other data:
 Age:{age}
@@ -13,6 +10,11 @@ Interested Topics: {topics}
 Do not make your own conclusions, create only necessary details.
 You only have to generate the content of the mail.
 '''
+
+age=20
+city='delhi'
+topics='Nutritions, Ayurveda'
+PROMPT_FOR_MODEL.format({'age':age,'city':city,'topics':topics})
 
 output = replicate.run(
     "a16z-infra/llama13b-v2-chat:5c785d117c5bcdd1928d5a9acb1ffa6272d6cf13fcb722e90886a0196633f9d3",
