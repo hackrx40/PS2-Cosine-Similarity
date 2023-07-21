@@ -64,7 +64,7 @@ def email(request):
 @csrf_exempt
 def news(request):
     if request.method=='POST':
-        data=request.body
+        data=json.loads(request.body)
         query='+'.join(rl_db.child('user_data').child(data['user_id']).get().val()['Articles'])
         resp=requests.get("https://newsapi.org/v2/everything?q="+query+"&from=2023-06-21&sortBy=publishedAt&apiKey=206e6bd694234e429edacbaa9c437d6c")
         docs=json.loads(resp.content.decode())['articles'][5]
