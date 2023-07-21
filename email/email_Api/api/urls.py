@@ -6,4 +6,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('email/', views.email, name='email'),
     path('diet', views.diet, name="diet"),
+    path('cgan', views.diet, name="cgan"),
 ]
