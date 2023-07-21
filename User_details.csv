@@ -1,0 +1,26 @@
+Customer ID,Age,City,Articles,Searches,Symptoms,Visit1,Visit2,Diabetes,LIPID,Thyroid
+1111222201,36,Mumbai,"Immunity, Ayurveda",Fatigue,acne,General Physician,,,HIGH,
+1111222202,39,Mumbai,"Ayurveda, Nutrition",,toothache,dentist,,,HIGH,BORDER
+1111222203,37,Mumbai,Nutrition,Pediatrition,,pediatrition,General Physician,,,
+1111222204,39,Mumbai,,Children Doctor,dentist,,,,BORDER,HIGH
+1111222205,38,Mumbai,,,,dentist,,,BORDER,VERY HIGH
+1111222206,39,Pune,Nutrition,,fever,,,,,
+1111222207,37,Pune,,Old Age Body Pain,fever,General Physician,,VERY HIGH,HIGH,
+1111222208,35,Pune,Nutrition,,fever,,,,,
+1111222209,40,Pune,"Heart Health, Nutrition",Weakness,,General Physician,,,,
+1111222210,40,Pune,,,ent,,,HIGH,,
+1111222211,33,Bangalore,,Diabetes,gastroenterologist,General Physician,diabetologist,BORDER,VERY HIGH,
+1111222212,44,Bangalore,"Heart Health, Nutrition",Gynacologist,Gynacologist,,,,,
+1111222213,39,Bangalore,"Heart Health, Nutrition",,,Cardiac Surgeon,,BORDER,BORDER,
+1111222214,39,Bangalore,,,Muscle pain,,,BORDER,,HIGH
+1111222215,42,Bangalore,"Ayurveda, Nutrition",Gynacologist,Gynacologist,,,,,VERY HIGH
+1111222216,46,Hyderabad,,,,dentist,diabetologist,,,
+1111222217,45,Hyderabad,"Immuntiy, Ayurveda",Diabetes,fever,,,,VERY HIGH,
+1111222218,34,Hyderabad,Nutrition,Dentist,toothache,General Physician,dentist,BORDER,,HIGH
+1111222219,41,Hyderabad,"Heart Health, Nutrition",Children Doctor,,pediatrition,,,VERY HIGH,
+1111222220,35,Hyderabad,,,anxiety,General Physician,,,,
+1111222221,33,Delhi,,Pediatrition,,,,HIGH,,
+1111222222,46,Delhi,Nutrition,Old Age Body Pain,dermitologist,General Physician,dermitologist,VERY HIGH,BORDER,
+1111222223,36,Delhi,,Fatigue,,,,BORDER,VERY HIGH,BORDER
+1111222224,45,Delhi,Ayurveda,,,General Physician,,,,VERY HIGH
+1111222225,39,Delhi,"Immunity, Ayurveda",Gynacologist,dermitologist,,,,BORDER,BORDER
