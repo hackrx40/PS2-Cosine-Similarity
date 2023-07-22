@@ -10,8 +10,10 @@ export default function Chatbot() {
 
   const handleApiCall = () => {
     const userId = 1111222211;
+    //const userId = 1111222223;
+
     // Replace 'YOUR_API_ENDPOINT_URL' with your actual API URL
-    const apiUrl = 'https://1e91-103-68-38-66.ngrok.io/diet';
+    const apiUrl = 'https://bc1c-103-68-38-66.ngrok.io/diet';
 
     // Prepare the data to be sent in the POST request
     const data = {

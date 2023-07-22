@@ -1,7 +1,8 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Doctors from './medicalscreens/Doctors';
-import Appointments from './medicalscreens/Appointments';
+import Article from './medicalscreens/article';
+import MultipleSelectOptionScreen from './medicalscreens/HealthQuestion';
 import { NavigationContainer } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -55,10 +56,24 @@ export default function Diet() {
           }}
         />
         <Drawer.Screen
-          name="Appointments"
-          component={Appointments}
+          name="Questionnaire"
+          component={MultipleSelectOptionScreen}
           options={{
-            title: 'Doctor Appointments',
+            title: 'Questionnaire',
+            drawerIcon: ({ focused }) => (
+              <FontAwesome5
+                name="clipboard"
+                size={focused ? 25 : 20}
+                color={focused ? '#0080ff' : '#999999'}
+              />
+            )
+          }}
+        />
+        <Drawer.Screen
+          name="Article"
+          component={Article}
+          options={{
+            title: 'Article',
             drawerIcon: ({ focused }) => (
               <FontAwesome5
                 name="clipboard"

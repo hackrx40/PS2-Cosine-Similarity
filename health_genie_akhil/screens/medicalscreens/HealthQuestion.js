@@ -3,13 +3,11 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Checkbox, Text, Button, Provider as PaperProvider } from 'react-native-paper';
 
 const options = [
-  { label: 'High Fever', value: 'High Fever' },
-  { label: 'Mild Fever', value: 'Mild Fever' },
-  { label: 'Cold', value: 'Cold' },
-  { label: 'Cough', value: 'Cough' },
-  { label: 'Muscle Pain', value: 'Muscle Pain' },
+  { label: 'loss_of_balance', value: 'loss_of_balance' },
+  { label: 'dark_urine', value: 'dark_urine' },
+  { label: 'cough', value: 'cough' },
   { label: 'chest_pain', value: 'chest_pain' },
-  { label: 'blurred and distorted vision', value: 'blurred and distorted vision' },
+  { label: 'blurred_and_distorted_vision', value: 'blurred_and_distorted_vision' },
   { label: 'abdominal_pain', value: 'abdominal_pain' },
   { label: 'joint_pain', value: 'joint_pain' },
   { label: 'fatigue', value: 'fatigue' },
@@ -31,11 +29,19 @@ const options = [
   { label: 'itching', value: 'itching' },
   { label: 'excessive_hunger', value: 'excessive_hunger' },
   { label: 'chills', value: 'chills' },
+  { label: 'sweating', value: 'sweating' },
+
 
 ];
 
 const MultipleSelectOptionScreen = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [apiPrediction, setApiPrediction] = useState('');
+  const [apiChances, setApiChances] = useState('');
+  const [apiSpecialist, setApiSpecialist] = useState('');
+  const [apiDescription, setApiDescription] = useState('');
+  const [finalValue,setFinalValue] = useState({})
+
 
   const handleToggleOption = (value) => {
     const updatedOptions = selectedOptions.includes(value)
@@ -61,12 +67,63 @@ const MultipleSelectOptionScreen = () => {
     console.log('Selected Options:', selectedOptions);
   };
 
+  const handleApiCall = () => {
+    // Replace 'YOUR_API_ENDPOINT_URL' with your actual API URL
+    const apiUrl = 'https://1fa4-103-149-94-242.ngrok-free.app/predict';
+
+    const options = selectedOptions;
+
+    // Prepare the data to be sent in the POST request
+    const data = {
+      symptoms: options,
+    };
+
+    // Perform the API call using the fetch() function
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Handle the API response as needed
+        setApiPrediction(responseData.prediction[0]);
+        setApiChances(responseData.chances[0]);
+        setApiSpecialist(responseData.Specialist[0]);
+        setApiDescription(responseData.Description);
+        console.log(apiPrediction)
+
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the API call
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <View style={styles.container}>
     <ScrollView>
       <Text style = {styles.title}>Symptoms</Text>
       {renderOptions()}
-      <Button mode="contained" onPress={handleSubmit}>
+      <View style={styles.placeholder}>
+        <View style={styles.placeholderInset}>
+          <Text style={styles.apiResponseText}>
+            Prediction: {apiPrediction}
+          </Text>
+          <Text style={styles.apiResponseText}>
+            Chances: {apiChances}
+          </Text>
+          <Text style={styles.apiResponseText}>
+             Specialist: {apiSpecialist}
+          </Text>
+          <Text style={styles.apiResponseText}>
+             Description: {apiDescription}
+          </Text>
+        </View>
+      </View>
+      <Button mode="contained" onPress={handleApiCall}>
         Submit
       </Button>
     </ScrollView>
@@ -92,6 +149,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 8,
     color: '#333', // Change the option text color to match your theme
+  },
+  apiResponseText: {
+    fontSize: 16,
+    color: '#222',
+    textAlign: 'center',
+    padding: 16,
+  },
+  placeholder: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    height: 400,
+    marginTop: 60,
+    padding: 24,
+    backgroundColor: '#F3F4F6',
+  },
+  placeholderInset: {
+    borderWidth: 4,
+    borderColor: '#CFD1D4',
+    borderStyle: 'dashed',
+    borderRadius: 9,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
   },
 });
 

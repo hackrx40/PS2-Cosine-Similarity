@@ -14,6 +14,7 @@ export default function Article() {
   const [newsTitle, setNewsTitle] = useState('');
   const [newsAuthor, setNewsAuthor] = useState('');
 
+
   const handleApiCall = () => {
 
       const userId = 1111222211;
@@ -39,6 +40,7 @@ export default function Article() {
         setNewsUrl(responseData.obj1.url);
         setNewsTitle(responseData.obj1.title);
         setNewsAuthor(responseData.obj1.author);
+        setNews(responseData);
       }).catch ((error) => {
       // Handle any errors that occurred during the API call
       console.error('Error:', error);
