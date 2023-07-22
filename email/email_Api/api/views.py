@@ -32,6 +32,8 @@ Keep in mind the user has the following Symptoms :
 
 And the following Conditions : 
 {cnd}
+
+Give a short to the point answer without any introduction.
 '''
 
 FACTS_PROMPT_FOR_MODEL = '''
@@ -65,8 +67,17 @@ rl_db=db.database()
 
 def email(request):
     if request.method == 'GET':
-        ages,citys,topics=rl_db.child('user_data').child(1111222211).get().val()['Age'],rl_db.child('user_data').child(1111222211).get().val()['City'],rl_db.child('user_data').child(1111222211).get().val()['Articles']
-        htmly = get_template('email.html')
+        ages,citys,topics=rl_db.child('user_data').child(1111222211).get().val()['Age'],rl_db.child('user_data').child(1111222211).get().val()['City'],rl_db.child('user_data').child(1111222211).get().val()['Articles'] 
+        output_img = ''
+        if int(ages) > 50:
+            htmly = get_template('email.html')
+        else:
+            output_img = replicate.run(
+            "stability-ai/stable-diffusion:ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4",
+            input={"prompt": "an image showing support for {topic}"}
+            )
+            htmly = get_template('email1.html')
+
         subject, from_email, to = 'Exciting new app', 'giridharsunil@gmail.com', 'akhilrnair28@gmail.com'
         prompt = PROMPT_FOR_MODEL.format(age = ages, city=citys, topics=topics)
         
@@ -78,7 +89,7 @@ def email(request):
         ot=''
         for i in output:
             ot+=i
-        d = {'content': ot}
+        d = {'content': ot, 'imag': output_img[0]}
         html_content = htmly.render(d)
         msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
