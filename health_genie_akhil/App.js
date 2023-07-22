@@ -21,7 +21,7 @@ import Welcome from  './screens/Welcome';
 
 
 /* export default function App() {
-  return <SignUp />;
+  return <Notification />;
 } */
 
 // const Tab = createBottomTabNavigator();
