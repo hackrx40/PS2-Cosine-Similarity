@@ -6,10 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 import pyrebase
 import json
 import requests
-
+import tensorflow as tf
 import replicate
 import os
 os.environ['REPLICATE_API_TOKEN']='r8_cXqebzEqrZAPHmzbFRiu47zmmbWxWFa1Youl3'
+
 PROMPT_FOR_MODEL='''
 You are to generate only the body of an mail to market a health app that is personalized to the user's need.
 Create mail to cater to a user with only the following data and do not add any other data:
@@ -23,6 +24,7 @@ Do not make your own conclusions, create only necessary details.
 You only have to generate the content of the mail.
 End the email asking the user to download our app Health Genie.
 '''
+
 DIET_PROMPT_FOR_MODEL='''
 Generate a list of Foods that can be prepared using the following Ingredients :
 {ingds}
@@ -89,7 +91,7 @@ def email(request):
         ot=''
         for i in output:
             ot+=i
-        d = {'content': ot, 'imag': output_img[0]}
+        d = {'content': ot, 'imag': "\""+output_img[0]+"\""}
         html_content = htmly.render(d)
         msg = EmailMultiAlternatives(subject, html_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
@@ -206,3 +208,4 @@ def notification(request):
             op =op +  ot[i] + '\n'
         print(op)
         return JsonResponse({'output':op})
+    
